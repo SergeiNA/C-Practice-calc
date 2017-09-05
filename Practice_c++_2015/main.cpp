@@ -2,7 +2,6 @@
 *   Calculator with simle expression prase 
 *	from Printsipy_I_Practica_S_ispolzovaniem_C_-_2015
 *	Chapter 6
-*	Add some shit
 **/
 #include <iostream>
 #include <exception>
