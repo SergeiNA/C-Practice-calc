@@ -16,6 +16,13 @@ double primary() {
 			throw std::exception(" end &brascete& ) not found\n");
 		return d;
 	}
+	case '{': {
+		double d = expression();
+		t = ts.get();
+		if (t.kind != '}')
+			throw std::exception(" end &brascete& } not found\n");
+		return d;
+	}
 	case '8':
 		return t.value;
 	case ';': case 'q': {
