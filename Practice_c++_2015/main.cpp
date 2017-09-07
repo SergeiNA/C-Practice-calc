@@ -3,6 +3,10 @@
 *	from Printsipy_I_Practica_S_ispolzovaniem_C_-_2015
 *	Chapter 6
 **/
+/*
+asd
+asd
+*/
 #include <iostream>
 #include <exception>
 #include "expression.h"
