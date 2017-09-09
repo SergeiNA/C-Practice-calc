@@ -3,6 +3,7 @@
 // this class work with stream cin 
 // it's main work get symbols from stream 
 // and if it need put them back
+//
 class token_stream
 {
 public:
