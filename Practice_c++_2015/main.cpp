@@ -7,20 +7,23 @@
 #include <iostream>
 #include <exception>
 #include "expression.h"
+void calculate() {
+	double val = 0;
+	std::cout << ">> ";
+	while (std::cin) {
+		token t = ts.get();
+		if (t.kind == quit) break;
+		if (t.kind == print)
+			std::cout << "= " << val << std::endl;
+		else
+			ts.put_back(t);
+		val = expression();
+	}
+}
 int main() {
 
 	try {
-		double val = 0;
-		std::cout << ">> ";
-		while (std::cin) {
-			token t = ts.get();
-			if (t.kind == 'q') break;
-			if (t.kind == ';')
-				std::cout <<"= "<< val << std::endl;
-			else
-				ts.put_back(t);
-			val = expression();
-		}
+		calculate();
 		system("pause");
 	}
 	catch (std::exception& e) {

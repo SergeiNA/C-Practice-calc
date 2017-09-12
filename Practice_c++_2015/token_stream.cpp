@@ -15,10 +15,14 @@ token token_stream::get() {
 	char ch;
 	std::cin >> ch;
 	switch (ch) {
-	case ';':
-	case 'q':
-	case '(': case ')': case '{': case '}': case 'P': case 'C':
-	case '+': case '-': case '*': case '/': case '!': case ',':
+	case print:			// t.kind == ; (print) mean end of expression and type the result
+	case quit:			// t.kind == q; (quit) close the program
+	case '(': case ')': 
+	case '{': case '}': 
+	case f_permut:		// P(a,b) permut func of permutation
+	case f_combin:		// C(a,b) combin func of combination
+	case ',':
+	case '+': case '-': case '*': case '/': case '!': 
 		return token{ ch };
 	case '.':
 	case '0': case '1': case '2': case '3': case '4':
@@ -26,7 +30,7 @@ token token_stream::get() {
 		std::cin.putback(ch);
 		double val;
 		std::cin >> val;
-		return token{ '8',val };
+		return token{ number,val };
 	}
 	default:
 		throw std::exception("unknown lexem\n");
