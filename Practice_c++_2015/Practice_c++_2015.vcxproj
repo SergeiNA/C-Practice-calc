@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="expression.h" />
+    <ClInclude Include="fractal.h" />
     <ClInclude Include="primary.h" />
     <ClInclude Include="term.h" />
     <ClInclude Include="token.h" />

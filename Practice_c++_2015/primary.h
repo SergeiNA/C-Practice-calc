@@ -13,14 +13,14 @@ double primary() {
 		double d = expression();
 		t = ts.get();
 		if (t.kind != ')')
-			throw std::exception(" end &brascete& ) not found\n");
+			throw std::exception(" end  brackets ) not found\n");
 		return d;
 	}
 	case '{': {
 		double d = expression();
 		t = ts.get();
 		if (t.kind != '}')
-			throw std::exception(" end &brascete& } not found\n");
+			throw std::exception(" end  brackets } not found\n");
 		return d;
 	}
 	case '8':
