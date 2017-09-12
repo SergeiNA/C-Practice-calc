@@ -12,6 +12,7 @@ int main() {
 	try {
 		double val = 0;
 		while (std::cin) {
+			//std::cout << ">> ";
 			token t = ts.get();
 			if (t.kind == 'q') break;
 			if (t.kind == ';')

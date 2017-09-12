@@ -122,8 +122,10 @@
     <ClCompile Include="token_stream.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Combination.h" />
     <ClInclude Include="expression.h" />
     <ClInclude Include="fractal.h" />
+    <ClInclude Include="Permutation.h" />
     <ClInclude Include="primary.h" />
     <ClInclude Include="term.h" />
     <ClInclude Include="token.h" />

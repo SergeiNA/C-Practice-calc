@@ -17,8 +17,8 @@ token token_stream::get() {
 	switch (ch) {
 	case ';':
 	case 'q':
-	case '(': case ')': case '{': case '}':
-	case '+': case '-': case '*': case '/': case '!':
+	case '(': case ')': case '{': case '}': case 'P': case 'C':
+	case '+': case '-': case '*': case '/': case '!': case ',':
 		return token{ ch };
 	case '.':
 	case '0': case '1': case '2': case '3': case '4':
