@@ -11,8 +11,8 @@ int main() {
 
 	try {
 		double val = 0;
+		std::cout << ">> ";
 		while (std::cin) {
-			//std::cout << ">> ";
 			token t = ts.get();
 			if (t.kind == 'q') break;
 			if (t.kind == ';')
@@ -25,12 +25,20 @@ int main() {
 	}
 	catch (std::exception& e) {
 		std::cerr << e.what() << '\n';
-		system("pause");
+		std::cout << "If you want close window press `\n";
+		char ch;
+		for (char ch; std::cin >> ch;)
+			if (ch == '`') return 1;
+		//system("pause");
 		return 1;
 	}
 	catch (...) {
 		std::cerr << "Exeption\n";
-		system("pause");
+		std::cout << "If you want close window press `\n";
+		char ch;
+		for (char ch; std::cin >> ch;)
+			if (ch == '`') return 1;
+		//system("pause");
 		return 2;
 	}
 }

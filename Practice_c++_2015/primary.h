@@ -80,6 +80,10 @@ double primary() {
 			throw std::exception("end brackets } not found\n");
 		return d;
 	}
+	case '-':
+		return -primary();
+	case '+':
+		return primary();
 	case '8': {
 		double temp=t.value;
 		t = ts.get();
