@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 #include "primary.h"
 #include <exception>
 // work with * and /
@@ -17,6 +18,13 @@ double term() {
 			if (d == 0)
 				throw std::exception("Divid by zero\n");
 			left /= d;
+			t = ts.get();
+			break;
+		}
+		case '%': {
+			double d = primary();
+			if (d == 0) throw std::exception("Divide by zero!\n");
+			left = std::fmod(left, d);
 			t = ts.get();
 			break;
 		}
