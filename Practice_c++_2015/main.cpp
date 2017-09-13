@@ -41,6 +41,7 @@ void calculate() {
 	double val = 0;
 	std::cout << ">> ";
 	while (std::cin) {
+		try {
 		token t = ts.get();
 		if (t.kind == quit) break;
 		if (t.kind == print)
@@ -48,31 +49,22 @@ void calculate() {
 		else
 			ts.put_back(t);
 		val = expression();
+		}
+		catch (std::exception& e) {
+			std::cerr << e.what() << '\n';
+			std::cin.get();
+		}
+		catch (...) {
+			std::cerr << "Exeption\n";
+			std::cin.get();
+		}
 	}
 }
 int main() {
 
-	try {
+	
 		calculate();
 		system("pause");
-	}
-	catch (std::exception& e) {
-		std::cerr << e.what() << '\n';
-		std::cout << "If you want close window press `\n";
-		char ch;
-		for (char ch; std::cin >> ch;)
-			if (ch == '`') return 1;
-		//system("pause");
-		return 1;
-	}
-	catch (...) {
-		std::cerr << "Exeption\n";
-		std::cout << "If you want close window press `\n";
-		char ch;
-		for (char ch; std::cin >> ch;)
-			if (ch == '`') return 1;
-		//system("pause");
-		return 2;
-	}
+	
 }
 
