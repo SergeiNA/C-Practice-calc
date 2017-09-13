@@ -6,9 +6,9 @@
 class token_stream
 {
 public:
-public:
 	token get();
 	void put_back(token);
+	void ignore(char ch);
 private:
 	bool full{ false };
 	token buffer;

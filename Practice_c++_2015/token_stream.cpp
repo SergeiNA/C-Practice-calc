@@ -7,6 +7,18 @@ void token_stream::put_back(token t) {
 	buffer = t;
 	full = true;
 }
+void token_stream::ignore(char ch)
+{
+	if (full&& ch == buffer.kind) {
+		full = false;
+		return;
+	}
+	full = false;
+
+	char c = 0;
+	while (std::cin >> c)
+		if (c == ch) return;
+}
 token token_stream::get() {
 	if (full) {
 		full = false;

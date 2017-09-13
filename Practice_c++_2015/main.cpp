@@ -37,6 +37,11 @@
 #include <iostream>
 #include <exception>
 #include "expression.h"
+
+void clean_up_mess() {
+	ts.ignore(print);
+}
+
 void calculate() {
 	double val = 0;
 	std::cout << ">> ";
@@ -52,11 +57,11 @@ void calculate() {
 		}
 		catch (std::exception& e) {
 			std::cerr << e.what() << '\n';
-			std::cin.get();
+			clean_up_mess();
 		}
 		catch (...) {
 			std::cerr << "Exeption\n";
-			std::cin.get();
+			clean_up_mess();
 		}
 	}
 }
