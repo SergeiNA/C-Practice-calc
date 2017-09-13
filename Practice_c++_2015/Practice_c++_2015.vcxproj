@@ -127,7 +127,6 @@
     <ClInclude Include="fractal.h" />
     <ClInclude Include="Permutation.h" />
     <ClInclude Include="primary.h" />
-    <ClInclude Include="std_lib_facilities.h" />
     <ClInclude Include="term.h" />
     <ClInclude Include="token.h" />
     <ClInclude Include="token_stream.h" />
