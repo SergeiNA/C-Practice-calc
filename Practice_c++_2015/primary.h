@@ -58,12 +58,15 @@ double primary() {
 		}
 		
 	}
-	case ';': case 'q': {	// handing problems with 'q' and ';' in 
-		ts.put_back(t);		// primary expression. This doesn't used in book!
-		return t.value;		// that's why i haven't the same errors
-	}
-	default:
+	//case ';': case 'q': {	// handing problems with 'q' and ';' in 
+	//	ts.put_back(t);		// primary expression. This doesn't used in book!
+	//	return t.value;		// that's why i haven't the same errors
+	//}
+	default: {
+		ts.put_back(t);
 		throw std::exception("primary expession not found\n");
+	}
+		
 
 	}
 }

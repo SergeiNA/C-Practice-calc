@@ -4,7 +4,12 @@
 *	Переписана функция calculate()
 *	Первые шаги к использованию переменных
 ---------------------------------------------------------------
-
+*	21.09.2017
+*	Решена проблема с унарными операциями, когда primary() кидало
+*	исключение и при этом съедался один символ
+*	примеры типа 1++; съедали ";" и функция clean_up_mess()
+*	требовала повторного ввода ";"
+---------------------------------------------------------------
 *   Calculator with simle expression prase
 *	from Printsipy_I_Practica_S_ispolzovaniem_C_-_2015
 *	Chapter 6
@@ -40,6 +45,7 @@
 *	Число:
 *		Литерал с плавающей точкой
 **/
+
 #include "Variables.h"
 #include <iostream>
 #include <exception>
@@ -75,9 +81,6 @@ double statement() {
 }
 
 
-
-
-
 void help() {
 	std::cout << "--Permutation: tap 'P(expression,expression)'\n";
 	std::cout << "--Combination: tap 'C(expression,expression)'\n";
@@ -86,13 +89,22 @@ void help() {
 void calculate() {
 
 	while (std::cin) {
-
-		std::cout << ">> ";
-		token t = ts.get();
-		while (t.kind == print) t = ts.get();		// eat all ';'
-		if (t.kind == quit) return;
-		ts.put_back(t);
-		std::cout << "= " << statement() << '\n';
+		try {
+			std::cout << ">> ";
+			token t = ts.get();
+			while (t.kind == print) t = ts.get();		// eat all ';'
+			if (t.kind == quit) return;
+			ts.put_back(t);
+			std::cout << "= " << statement() << '\n';
+		}
+		catch (std::exception& e) {
+			std::cerr << e.what() << '\n';
+			clean_up_mess();
+		}
+		catch (...) {
+			std::cerr << "Exeption\n";
+			clean_up_mess();
+		}
 	}
 }
 
@@ -100,17 +112,9 @@ void calculate() {
 int main() {
 
 	help();
-	try {
-		calculate();
-	}
-	catch (std::exception& e) {
-		std::cerr << e.what() << '\n';
-		clean_up_mess();
-	}
-	catch (...) {
-		std::cerr << "Exeption\n";
-		clean_up_mess();
-	}
+
+	calculate();
+
 	system("pause");
 }
 
