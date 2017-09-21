@@ -42,6 +42,7 @@ token token_stream::get() {
 	case '{': case '}': 
 	case f_permut:		// P(a,b) permut func of permutation
 	case f_combin:		// C(a,b) combin func of combination
+	case '=':			// for variables
 	case ',':
 	case '+': case '-': case '*': case '/': case '!': 
 		return token{ ch };
@@ -55,14 +56,17 @@ token token_stream::get() {
 	}
 	default:
 		if(isalpha(ch)) {
-			std::cin.putback(ch);
 			std::string s;
-			std::cin >> s;
+			s += ch;
+			while (std::cin.get(ch) &&
+				(isalpha(ch) || iswdigit(ch)))
+				s += ch;
+			std::cin.putback(ch);
 			if (s == declkey)
 				return token(let);
-			return token(v_name, s);
+			return token{ v_name, s };
 		}
-		throw std::exception("unknown lexem\n");
+		throw std::exception("token_stream: unknown lexem\n");
 
 	}
 }

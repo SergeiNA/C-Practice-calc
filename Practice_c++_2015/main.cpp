@@ -9,6 +9,9 @@
 *	исключение и при этом съедался один символ
 *	примеры типа 1++; съедали ";" и функция clean_up_mess()
 *	требовала повторного ввода ";"
+*
+*	Реализована функция использования переменных
+*	требуется тестирование
 ---------------------------------------------------------------
 *   Calculator with simle expression prase
 *	from Printsipy_I_Practica_S_ispolzovaniem_C_-_2015
@@ -51,22 +54,23 @@
 #include <exception>
 #include "expression.h"
 
+std::vector<CVariables>  CVariables::var_table;
 void clean_up_mess() {
 	ts.ignore(print);
 }
 
 double declaration() {
-	//token t = ts.get();
-	//if (t.kind != name)
-	//	throw std::exception("variable name not defined\n");
-	//std::string var_name = t.name;
-	//token t2 = ts.get();
-	//if (t2.kind != '=')
-	//	throw std::exception("The '=' is missing\n");
-	//double d = expression();
-	//define_name(var_name, d);
-	//return d;
-	return 1;
+	token t = ts.get();
+	if (t.kind != v_name)
+		throw std::exception("variable name not defined\n");
+	std::string var_name = t.name;
+	token t2 = ts.get();
+	if (t2.kind != '=')
+		throw std::exception("The '=' is missing\n");
+	double d = expression();
+	CVariables::define_name(var_name, d);
+	return d;
+	//return 1;
 }
 
 double statement() {

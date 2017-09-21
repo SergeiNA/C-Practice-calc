@@ -45,7 +45,8 @@ double primary() {
 		return -primary();
 	case '+':
 		return primary();
-
+	case v_name:
+		return CVariables::get_value(t.name);
 	case number: {
 		double temp=t.value;
 		t = ts.get();
