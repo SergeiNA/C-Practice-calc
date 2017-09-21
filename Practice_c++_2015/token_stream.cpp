@@ -13,11 +13,20 @@ void token_stream::ignore(char ch)
 		full = false;
 		return;
 	}
+
+	if (full&& quit == buffer.kind) return;
+
 	full = false;
 
 	char c = 0;
-	while (std::cin >> c)
+	while (std::cin >> c) {
 		if (c == ch) return;
+		if (ch == quit) {
+			std::cin.putback(ch);
+			return;
+		}
+	}
+		
 }
 token token_stream::get() {
 	if (full) {
