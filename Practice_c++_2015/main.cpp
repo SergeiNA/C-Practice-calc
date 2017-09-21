@@ -5,13 +5,13 @@
 *	Первые шаги к использованию переменных
 ---------------------------------------------------------------
 
-*   Calculator with simle expression prase 
+*   Calculator with simle expression prase
 *	from Printsipy_I_Practica_S_ispolzovaniem_C_-_2015
 *	Chapter 6
 *	Простой калькулятор
 *	Эта программа реализует основные выражения калькулятора
 *	Грамматика для ввода:
-*	
+*
 *	Инструкция:
 *		Выражение
 *		Вывод
@@ -63,9 +63,9 @@ double declaration() {
 	return 1;
 }
 
-double statement(){
+double statement() {
 	token t = ts.get();
-	switch (t.kind){
+	switch (t.kind) {
 	case let:
 		return declaration();
 	default:
@@ -86,22 +86,13 @@ void help() {
 void calculate() {
 
 	while (std::cin) {
-		try {
-			std::cout << ">> ";
-			token t = ts.get();
-			while (t.kind == print) t = ts.get();		// eat all ';'
-			if (t.kind == quit) return;
-			ts.put_back(t);
-			std::cout << "= " << statement() << '\n';
-		}
-		catch (std::exception& e) {
-			std::cerr << e.what() << '\n';
-			clean_up_mess();
-		}
-		catch (...) {
-			std::cerr << "Exeption\n";
-			clean_up_mess();
-		}
+
+		std::cout << ">> ";
+		token t = ts.get();
+		while (t.kind == print) t = ts.get();		// eat all ';'
+		if (t.kind == quit) return;
+		ts.put_back(t);
+		std::cout << "= " << statement() << '\n';
 	}
 }
 
@@ -109,8 +100,17 @@ void calculate() {
 int main() {
 
 	help();
-	calculate();
+	try {
+		calculate();
+	}
+	catch (std::exception& e) {
+		std::cerr << e.what() << '\n';
+		clean_up_mess();
+	}
+	catch (...) {
+		std::cerr << "Exeption\n";
+		clean_up_mess();
+	}
 	system("pause");
-
 }
 

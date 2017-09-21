@@ -1,7 +1,7 @@
 #include "token_stream.h"
 #include <exception>
 #include <iostream>
-
+#include <ctype.h>
 void token_stream::put_back(token t) {
 	if (full) throw std::exception(" buffer is full\n");
 	buffer = t;
@@ -45,6 +45,14 @@ token token_stream::get() {
 		return token{ number,val };
 	}
 	default:
+		if(isalpha(ch)) {
+			std::cin.putback(ch);
+			std::string s;
+			std::cin >> s;
+			if (s == declkey)
+				return token(let);
+			return token(v_name, s);
+		}
 		throw std::exception("unknown lexem\n");
 
 	}
