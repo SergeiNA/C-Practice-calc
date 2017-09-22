@@ -1,4 +1,5 @@
 #pragma once
+// Calculate fractal of number num
 unsigned long long fractal(const double& num) {
 	long long temp = num;
 	if (temp == 0)

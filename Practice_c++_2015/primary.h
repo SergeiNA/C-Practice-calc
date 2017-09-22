@@ -1,4 +1,8 @@
 #pragma once
+/* Work with primary exprssion like brakets (), braces {},
+-	unar '+' and '-', permutation and combination, variables
+-	and numbers
+*/
 #include "token_stream.h"
 #include <exception>
 #include "expression.h"
@@ -7,6 +11,8 @@
 #include "Combination.h"
 
 double expression();
+
+// work with stream of symbols
 token_stream ts;
 unsigned int permutation(token&);
 unsigned int combination(token&);
@@ -47,8 +53,8 @@ double primary() {
 		return primary();
 	case v_name:
 		return CVariables::get_value(t.name);
-	case number: {
-		double temp=t.value;
+	case number: {						// Check if it is a
+		double temp=t.value;			// number or fractal
 		t = ts.get();
 		if (t.kind == '!') {
 			return fractal(temp);
@@ -59,10 +65,6 @@ double primary() {
 		}
 		
 	}
-	//case ';': case 'q': {	// handing problems with 'q' and ';' in 
-	//	ts.put_back(t);		// primary expression. This doesn't used in book!
-	//	return t.value;		// that's why i haven't the same errors
-	//}
 	default: {
 		ts.put_back(t);
 		throw std::exception("primary expession not found\n");
@@ -71,7 +73,7 @@ double primary() {
 
 	}
 }
-// permutation and combination func defining
+// permutation and combination body func defining
 unsigned int permutation(token& t) {
 	t = ts.get();
 	double a;

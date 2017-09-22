@@ -1,6 +1,6 @@
 #pragma once
 #include "term.h"
-//work with + and -
+//work with '+',  '-' and numbers
 double expression() {
 	double left = term();
 	token t = ts.get();

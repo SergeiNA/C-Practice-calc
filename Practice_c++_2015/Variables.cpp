@@ -28,7 +28,7 @@ bool CVariables::is_declered(std::string & var)
 
 double CVariables::define_name(std::string & var, double & val)
 {
-	if (is_declered(var)) throw std::exception("double declaration\n");
+	if (is_declered(var)) throw std::exception("re-declaration of variable\n");
 	var_table.push_back(CVariables(var, val));
 	return val;
 }

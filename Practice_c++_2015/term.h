@@ -1,8 +1,9 @@
 #pragma once
+// work with * , / and %
 #include <cmath>
 #include "primary.h"
 #include <exception>
-// work with * and /
+
 double term() {
 	double left = primary();
 	token t = ts.get();

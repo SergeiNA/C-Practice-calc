@@ -2,7 +2,8 @@
 #include "token.h"
 // this class work with stream cin 
 // it's main work get symbols from stream 
-// and if it need put them back
+// and if it need put them back or 
+// ignor all symbols while the set symbol
 class token_stream
 {
 public:

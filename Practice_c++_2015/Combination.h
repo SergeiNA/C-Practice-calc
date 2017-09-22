@@ -1,4 +1,5 @@
 #pragma once
+// Combination function A!*B!/(A-B)! or P(A,B)/B!
 #include <exception>
 #include "Permutation.h"
 #include "fractal.h"
