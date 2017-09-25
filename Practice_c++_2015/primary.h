@@ -9,7 +9,7 @@
 #include "fractal.h"
 #include "Permutation.h"
 #include "Combination.h"
-
+#include "Debug_func.h"
 double expression();
 
 // work with stream of symbols
@@ -17,26 +17,31 @@ token_stream ts;
 unsigned int permutation(token&);
 unsigned int combination(token&);
 double		 sqrt_v		(token&);
+double		 pow_v		(token&);
 // work witch brackets and numbers
 
 double primary() {
 	token t = ts.get();
+	if (DEBUG)
+		dout("[Primary]: token_kind: ", t.kind);
 	switch (t.kind) {
 
-	case 'P': {					// Permutation
+	case f_permut: 				// Permutation
 		return permutation(t);
-	}
-			  
-	case 'C': {					// Combination
+	  
+	case f_combin: 				// Combination
 		return combination(t);
-	}
-	case'S' : {
-		return sqrt_v(t);
-	}
 
+	case f_sqrt : 
+		return sqrt_v(t);
+
+	case f_pow:
+		return pow_v(t);
 	case '(': {
 		double d = expression();
 		t = ts.get();
+		if (DEBUG)
+			dout("[Primary]: token_kind: ", t.kind);
 		if (t.kind != ')')
 			throw std::exception("[Primary]: end brackets ) not found\n");
 		return d;
@@ -45,6 +50,8 @@ double primary() {
 	case '{': {
 		double d = expression();
 		t = ts.get();
+		if (DEBUG)
+			dout("[Primary]: token_kind: ", t.kind);
 		if (t.kind != '}')
 			throw std::exception("[Primary]: end brackets } not found\n");
 		return d;
@@ -59,6 +66,8 @@ double primary() {
 	case number: {						// Check if it is a
 		double temp=t.value;			// number or fractal
 		t = ts.get();
+		if (DEBUG)
+			dout("[Primary]: token_kind: ", t.kind);
 		if (t.kind == '!') 
 			return fractal(temp);
 		if (t.kind == 'k') 
@@ -80,8 +89,8 @@ double primary() {
 // permutation and combination body func defining
 unsigned int permutation(token& t) {
 	t = ts.get();
-	double a;
-	double b;
+	unsigned int a;
+	unsigned int b;
 	if (t.kind == '(') {		// func view have to be like P(expr,expr)
 		a = expression();
 		t = ts.get();
@@ -107,10 +116,10 @@ unsigned int permutation(token& t) {
 }
 unsigned int combination(token& t) {
 	t = ts.get();
-	double a;
-	double b;
+	unsigned int a;
+	unsigned int b;
 	if (t.kind == '(') {		// func view have to be like C(expr,expr)
-		a = expression();
+		a=expression() ;
 		t = ts.get();
 		if (t.kind == ',')
 			b = expression();
@@ -153,5 +162,34 @@ double sqrt_v(token& t) {
 	else {
 		ts.put_back(t);
 		throw std::exception("Invalid arguments for F[Sqrt]: maybe ')' is missed\n");
+	}
+}
+
+
+double pow_v(token& t) {
+	t = ts.get();
+	double a;
+	unsigned int b;
+	if (t.kind == '(') {		// func view have to be like C(expr,expr)
+		a = expression();
+		t = ts.get();
+		if (t.kind == ',')
+			b = expression();
+		else {
+			ts.put_back(t);
+			throw std::exception("Invalid arguments for F[POW]: maybe ',' is missed\n");
+		}
+
+	}
+	else {
+		ts.put_back(t);
+		throw std::exception("Invalid arguments for F[POW]: maybe '(' is missed\n");
+	}
+	t = ts.get();
+	if (t.kind == ')')
+		return pow(a, b);
+	else {
+		ts.put_back(t);
+		throw std::exception("Invalid arguments for F[POW]: maybe ')' is missed\n");
 	}
 }

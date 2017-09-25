@@ -63,13 +63,13 @@ token token_stream::get() {
 		std::cin >> val;
 		return token{ number,val };
 	}
-	default:	
+	default:	 
 		// for variables
 		if(isalpha(ch)) {
 			std::string s;
 			s += ch;
-			while (std::cin.get(ch) &&			// check for "let" or correct varName
-				(isalpha(ch) || iswdigit(ch)))
+			while (std::cin.get(ch) &&						// check for "let" or correct varName
+				(ch=='_'|| isalpha(ch) || iswdigit(ch)))
 				s += ch;
 			std::cin.putback(ch);
 			if (s == declkey)					
@@ -80,6 +80,8 @@ token token_stream::get() {
 				return token(f_permut);
 			if (s == sqrtkey)
 				return token(f_sqrt);
+			if (s == powkey)
+				return token(f_pow);
 			if (s == quitkey)
 				return token(quit);
 			if (s == printkey)

@@ -16,6 +16,11 @@
 *	22.09.2017
 *	Добавлены комментарии
 ---------------------------------------------------------------
+*	25.09.2017
+*	Возможность использования имен с подчеркиванием
+*	Функция pow (a,b) и функция sqrt (a,b)
+*	добавлена функция dout для удобного дебагинга
+---------------------------------------------------------------
 *   Calculator with simle expression prase
 *	from Printsipy_I_Practica_S_ispolzovaniem_C_-_2015
 *	Chapter 6
@@ -52,6 +57,8 @@
 *		Литерал с плавающей точкой
 **/
 
+#define DEBUG 0
+
 #include "Variables.h"
 #include <iostream>
 #include <exception>
@@ -60,6 +67,7 @@
 // init vector of variables
 // it will contain all variables
 std::vector<CVariables>  CVariables::var_table;
+
 
 // clean input stream after errors
 // ignore all symbols while ";"
@@ -127,8 +135,11 @@ void calculate() {
 }
 
 
-int main() {
 
+int main() {
+	// constant variables
+	CVariables::define_name((std::string)"pi", 3.1415926535);
+	CVariables::define_name((std::string)"e", 2.7182818284);
 	help();
 
 	calculate();

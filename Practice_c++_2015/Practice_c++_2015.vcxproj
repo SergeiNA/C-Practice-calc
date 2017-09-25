@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Combination.h" />
+    <ClInclude Include="Debug_func.h" />
     <ClInclude Include="expression.h" />
     <ClInclude Include="fractal.h" />
     <ClInclude Include="Permutation.h" />

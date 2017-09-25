@@ -9,7 +9,7 @@ double CVariables::get_value(const std::string& s) {
 	throw std::exception("get : undefined variable\n");
 }
 
-void CVariables::set_value(std::string s , double d)
+void CVariables::set_value(const std::string s , const double d)
 {
 	for (CVariables & v: var_table)
 		if (v.name == s) {
@@ -19,14 +19,14 @@ void CVariables::set_value(std::string s , double d)
 	throw std::exception("set: undefined variable\n");
 }
 
-bool CVariables::is_declered(std::string & var)
+bool CVariables::is_declered(const std::string & var) 
 {
 	for (const CVariables& v : var_table)
 		if (v.name == var) return true;
 	return false;
 }
 
-double CVariables::define_name(std::string & var, double & val)
+double CVariables::define_name(const std::string & var, const double & val)
 {
 	if (is_declered(var)) throw std::exception("re-declaration of variable\n");
 	var_table.push_back(CVariables(var, val));
