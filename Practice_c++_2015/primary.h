@@ -16,7 +16,7 @@ double expression();
 token_stream ts;
 unsigned int permutation(token&);
 unsigned int combination(token&);
-
+double		 sqrt_v		(token&);
 // work witch brackets and numbers
 
 double primary() {
@@ -30,12 +30,15 @@ double primary() {
 	case 'C': {					// Combination
 		return combination(t);
 	}
+	case'S' : {
+		return sqrt_v(t);
+	}
 
 	case '(': {
 		double d = expression();
 		t = ts.get();
 		if (t.kind != ')')
-			throw std::exception("end brackets ) not found\n");
+			throw std::exception("[Primary]: end brackets ) not found\n");
 		return d;
 	}
 
@@ -43,7 +46,7 @@ double primary() {
 		double d = expression();
 		t = ts.get();
 		if (t.kind != '}')
-			throw std::exception("end brackets } not found\n");
+			throw std::exception("[Primary]: end brackets } not found\n");
 		return d;
 	}
 
@@ -56,9 +59,10 @@ double primary() {
 	case number: {						// Check if it is a
 		double temp=t.value;			// number or fractal
 		t = ts.get();
-		if (t.kind == '!') {
+		if (t.kind == '!') 
 			return fractal(temp);
-		}
+		if (t.kind == 'k') 
+			return temp*1000;
 		else {
 			ts.put_back(t);
 			return temp;
@@ -67,7 +71,7 @@ double primary() {
 	}
 	default: {
 		ts.put_back(t);
-		throw std::exception("primary expession not found\n");
+		throw std::exception("[Primary]: primary expession not found\n");
 	}
 		
 
@@ -85,20 +89,20 @@ unsigned int permutation(token& t) {
 			b = expression();
 		else {
 			ts.put_back(t);
-			throw std::exception("Invalid arguments for F[Permutation], maybe ',' is missed\n");
+			throw std::exception("Invalid arguments for F[Permutation]: maybe ',' is missed\n");
 		}
 
 	}
 	else {
 		ts.put_back(t);
-		throw std::exception("Invalid arguments for F[Permutation], maybe '(' is missed\n");
+		throw std::exception("Invalid arguments for F[Permutation]: maybe '(' is missed\n");
 	}
 	t = ts.get();
 	if (t.kind == ')')
 		return Perm(a, b);
 	else {
 		ts.put_back(t);
-		throw std::exception("Invalid arguments for F[Permutation], maybe ')' is missed\n");
+		throw std::exception("Invalid arguments for F[Permutation]: maybe ')' is missed\n");
 	}
 }
 unsigned int combination(token& t) {
@@ -112,19 +116,42 @@ unsigned int combination(token& t) {
 			b = expression();
 		else {
 			ts.put_back(t);
-			throw std::exception("Invalid arguments for F[Combination], maybe ',' is missed\n");
+			throw std::exception("Invalid arguments for F[Combination]: maybe ',' is missed\n");
 		}
 
 	}
 	else {
 		ts.put_back(t);
-		throw std::exception("Invalid arguments for F[Combination], maybe '(' is missed\n");
+		throw std::exception("Invalid arguments for F[Combination]: maybe '(' is missed\n");
 	}
 	t = ts.get();
 	if (t.kind == ')')
 		return comb(a, b);
 	else {
 		ts.put_back(t);
-		throw std::exception("Invalid arguments for F[Combination], maybe ')' is missed\n");
+		throw std::exception("Invalid arguments for F[Combination]: maybe ')' is missed\n");
+	}
+}
+
+double sqrt_v(token& t) {
+	t = ts.get();
+	double a;
+	if (t.kind == '(') {		// func view have to be like C(expr,expr)
+		a = expression();
+		if (a < 0) {
+			ts.put_back(t);
+			throw std::exception("Invalid arguments for F[Sqrt]: The number under the root is <0\n");
+		}
+	}
+	else {
+		ts.put_back(t);
+		throw std::exception("Invalid arguments for F[Sqrt]: maybe '(' is missed\n");
+	}
+	t = ts.get();
+	if (t.kind == ')')
+		return sqrt(a);
+	else {
+		ts.put_back(t);
+		throw std::exception("Invalid arguments for F[Sqrt]: maybe ')' is missed\n");
 	}
 }

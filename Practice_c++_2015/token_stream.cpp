@@ -46,6 +46,7 @@ token token_stream::get() {
 	case quit:			// t.kind == q; (quit) close the program
 	case '(': case ')': 
 	case '{': case '}': 
+	case 'k':
 	case f_permut:		// P(a,b) permut func of permutation
 	case f_combin:		// C(a,b) combin func of combination
 	case '=':			// for variables
@@ -73,6 +74,16 @@ token token_stream::get() {
 			std::cin.putback(ch);
 			if (s == declkey)					
 				return token(let);
+			if (s == combinkey)
+				return token(f_combin);
+			if (s == permutkey)
+				return token(f_permut);
+			if (s == sqrtkey)
+				return token(f_sqrt);
+			if (s == quitkey)
+				return token(quit);
+			if (s == printkey)
+				return token(print);
 			return token{ v_name, s };
 		}
 		throw std::exception("token_stream: unknown lexem\n");
