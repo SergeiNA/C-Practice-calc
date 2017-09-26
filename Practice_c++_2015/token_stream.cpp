@@ -50,6 +50,7 @@ token token_stream::get() {
 	case f_permut:		// P(a,b) permut func of permutation
 	case f_combin:		// C(a,b) combin func of combination
 	case '=':			// for variables
+	case 'h':
 		//for operations
 	case ',':
 	case '+': case '-': case '*': case '/': case '!': 

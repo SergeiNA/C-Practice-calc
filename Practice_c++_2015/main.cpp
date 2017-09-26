@@ -63,6 +63,7 @@
 #include <iostream>
 #include <exception>
 #include "expression.h"
+#include "help_info.h"
 
 // init vector of variables
 // it will contain all variables
@@ -105,11 +106,7 @@ double statement() {
 	}
 }
 
-// ver 0.1 of help. Will be finalized
-void help() {
-	std::cout << "--Permutation: tap 'P(expression,expression)'\n";
-	std::cout << "--Combination: tap 'C(expression,expression)'\n";
-}
+
 
 // Work in cycle with input data
 void calculate() {
@@ -118,6 +115,11 @@ void calculate() {
 		try {
 			std::cout << ">> ";
 			token t = ts.get();
+			//if (t.kind == help) {
+			//	help_info();
+			//	std::cout << ">> ";
+			//	t = ts.get();
+			//}
 			while (t.kind == print) t = ts.get();		// eat all ';'
 			if (t.kind == quit) return;
 			ts.put_back(t);
@@ -140,7 +142,6 @@ int main() {
 	// constant variables
 	CVariables::define_name((std::string)"pi", 3.1415926535);
 	CVariables::define_name((std::string)"e", 2.7182818284);
-	help();
 
 	calculate();
 

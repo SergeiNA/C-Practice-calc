@@ -19,7 +19,8 @@ const std::string combinkey		= "comb";	// declaration key in stream to define pe
 const std::string sqrtkey		= "sqrt";	// declaration key in stream to define sqrt function sqrt(a,b)
 const std::string powkey		= "pow";	// declaration key in stream to define power function pow(a,b)
 const char v_name				= 'a';		// define type 'variable name'
-
+const char assign				= '=';
+const char help					= 'h';
 
 struct token {
 	char kind;

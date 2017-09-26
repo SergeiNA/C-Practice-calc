@@ -9,7 +9,7 @@ double CVariables::get_value(const std::string& s) {
 	throw std::exception("get : undefined variable\n");
 }
 
-void CVariables::set_value(const std::string s , const double d)
+void CVariables::set_value(const std::string& s , const double& d)
 {
 	for (CVariables & v: var_table)
 		if (v.name == s) {

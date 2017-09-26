@@ -61,8 +61,22 @@ double primary() {
 		return -primary();
 	case '+':
 		return primary();
-	case v_name:
-		return CVariables::get_value(t.name);
+	case v_name: {
+		auto temp_name = t.name;
+		t = ts.get();
+		if (t.kind == assign) {
+			auto temp = expression();
+			CVariables::set_value(temp_name, temp);
+			return temp;
+		}
+			
+		else {
+			ts.put_back(t);
+			return CVariables::get_value(temp_name);
+		}
+		
+	}
+		
 	case number: {						// Check if it is a
 		double temp=t.value;			// number or fractal
 		t = ts.get();
