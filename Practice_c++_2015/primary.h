@@ -37,6 +37,8 @@ double primary() {
 
 	case f_pow:
 		return pow_v(t);
+	case help:
+
 	case '(': {
 		double d = expression();
 		t = ts.get();
@@ -96,7 +98,6 @@ double primary() {
 		ts.put_back(t);
 		throw std::exception("[Primary]: primary expession not found\n");
 	}
-		
 
 	}
 }
@@ -111,20 +112,17 @@ unsigned int permutation(token& t) {
 		if (t.kind == ',')
 			b = expression();
 		else {
-			ts.put_back(t);
 			throw std::exception("Invalid arguments for F[Permutation]: maybe ',' is missed\n");
 		}
 
 	}
 	else {
-		ts.put_back(t);
 		throw std::exception("Invalid arguments for F[Permutation]: maybe '(' is missed\n");
 	}
 	t = ts.get();
 	if (t.kind == ')')
 		return Perm(a, b);
 	else {
-		ts.put_back(t);
 		throw std::exception("Invalid arguments for F[Permutation]: maybe ')' is missed\n");
 	}
 }
@@ -138,20 +136,17 @@ unsigned int combination(token& t) {
 		if (t.kind == ',')
 			b = expression();
 		else {
-			ts.put_back(t);
 			throw std::exception("Invalid arguments for F[Combination]: maybe ',' is missed\n");
 		}
 
 	}
 	else {
-		ts.put_back(t);
 		throw std::exception("Invalid arguments for F[Combination]: maybe '(' is missed\n");
 	}
 	t = ts.get();
 	if (t.kind == ')')
 		return comb(a, b);
 	else {
-		ts.put_back(t);
 		throw std::exception("Invalid arguments for F[Combination]: maybe ')' is missed\n");
 	}
 }
@@ -162,19 +157,16 @@ double sqrt_v(token& t) {
 	if (t.kind == '(') {		// func view have to be like C(expr,expr)
 		a = expression();
 		if (a < 0) {
-			ts.put_back(t);
 			throw std::exception("Invalid arguments for F[Sqrt]: The number under the root is <0\n");
 		}
 	}
 	else {
-		ts.put_back(t);
 		throw std::exception("Invalid arguments for F[Sqrt]: maybe '(' is missed\n");
 	}
 	t = ts.get();
 	if (t.kind == ')')
 		return sqrt(a);
 	else {
-		ts.put_back(t);
 		throw std::exception("Invalid arguments for F[Sqrt]: maybe ')' is missed\n");
 	}
 }
@@ -190,20 +182,17 @@ double pow_v(token& t) {
 		if (t.kind == ',')
 			b = expression();
 		else {
-			ts.put_back(t);
 			throw std::exception("Invalid arguments for F[POW]: maybe ',' is missed\n");
 		}
 
 	}
 	else {
-		ts.put_back(t);
 		throw std::exception("Invalid arguments for F[POW]: maybe '(' is missed\n");
 	}
 	t = ts.get();
 	if (t.kind == ')')
 		return pow(a, b);
 	else {
-		ts.put_back(t);
 		throw std::exception("Invalid arguments for F[POW]: maybe ')' is missed\n");
 	}
 }

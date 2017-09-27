@@ -10,13 +10,14 @@ class CVariables
 public:
 	std::string name;		
 	double		value;
+	bool		isConst;
 public:
 	// establish value of variable
 	static double		get_value	(const std::string& );
 	// define the variable as (VarName, VarValue)
-	static double		define_name	(const std::string& , const double&);
+	static double		define_name	(const std::string& , const double&,const bool);
 	static void			set_value	(const std::string&, const double&);
-						CVariables	(const std::string&, const double&);
+						CVariables	(const std::string&, const double&, const bool);
 						~CVariables	();
 private:
 	// set the current value for the current VarName

@@ -21,6 +21,12 @@
 *	Функция pow (a,b) и функция sqrt (a,b)
 *	добавлена функция dout для удобного дебагинга
 ---------------------------------------------------------------
+*	27.09.2017
+*	Реализация команды "help"
+*	Реализация возможномти присваивания для переменных '='
+*	Хотфиксы багов в спец функциях
+*	Реализована возможность добавления константных переменных
+---------------------------------------------------------------
 *   Calculator with simle expression prase
 *	from Printsipy_I_Practica_S_ispolzovaniem_C_-_2015
 *	Chapter 6
@@ -58,6 +64,7 @@
 **/
 
 #define DEBUG 0
+#define CONST true
 
 #include "Variables.h"
 #include <iostream>
@@ -82,7 +89,12 @@ void clean_up_mess() {
 // then return value of variable
 
 double declaration() {
+	bool isConst = false;
 	token t = ts.get();
+	if (t.kind == const_v) {
+		isConst = true;
+	    t = ts.get();
+	}
 	if (t.kind != v_name)
 		throw std::exception("variable name not defined\n");
 	std::string var_name = t.name;
@@ -90,7 +102,7 @@ double declaration() {
 	if (t2.kind != '=')
 		throw std::exception("The '=' is missing\n");
 	double d = expression();
-	CVariables::define_name(var_name, d);
+	CVariables::define_name(var_name, d,isConst);
 	return d;
 }
 
@@ -115,14 +127,13 @@ void calculate() {
 		try {
 			std::cout << ">> ";
 			token t = ts.get();
-			//if (t.kind == help) {
-			//	help_info();
-			//	std::cout << ">> ";
-			//	t = ts.get();
-			//}
 			while (t.kind == print) t = ts.get();		// eat all ';'
 			if (t.kind == quit) return;
 			ts.put_back(t);
+			if (t.kind == help) {
+				help_info();
+				std::cout << ">> ";
+			}
 			std::cout << "= " << statement() << '\n';
 		}
 		catch (std::exception& e) {
@@ -140,8 +151,8 @@ void calculate() {
 
 int main() {
 	// constant variables
-	CVariables::define_name((std::string)"pi", 3.1415926535);
-	CVariables::define_name((std::string)"e", 2.7182818284);
+	CVariables::define_name((std::string)"pi", 3.1415926535, CONST);
+	CVariables::define_name((std::string)"e", 2.7182818284, CONST);
 
 	calculate();
 
