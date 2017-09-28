@@ -27,6 +27,13 @@
 *	Хотфиксы багов в спец функциях
 *	Реализована возможность добавления константных переменных
 ---------------------------------------------------------------
+*	28.09.2017
+*	Убрана глобальная переменная ts
+*	Теперь она передается в качестве параметров в фукции
+*	expression, primary, term и т.д.
+*	Реализовано отдельное пространство имен для данного парсера
+*	parcl
+---------------------------------------------------------------
 *   Calculator with simle expression prase
 *	from Printsipy_I_Practica_S_ispolzovaniem_C_-_2015
 *	Chapter 6
@@ -74,13 +81,13 @@
 
 // init vector of variables
 // it will contain all variables
-std::vector<CVariables>  CVariables::var_table;
+std::vector<parcl::CVariables>  parcl::CVariables::var_table;
 
 
 // clean input stream after errors
 // ignore all symbols while ";"
-void clean_up_mess() {
-	ts.ignore(print);
+void clean_up_mess(parcl::token_stream& ts) {
+	ts.ignore(parcl::print);
 }
 
 
@@ -88,61 +95,61 @@ void clean_up_mess() {
 // save name and value of variable in var_table
 // then return value of variable
 
-double declaration() {
+double declaration(parcl::token_stream& ts) {
 	bool isConst = false;
-	token t = ts.get();
-	if (t.kind == const_v) {
+	parcl::token t = ts.get();
+	if (t.kind == parcl::const_v) { // declare as const variable or not
 		isConst = true;
 	    t = ts.get();
 	}
-	if (t.kind != v_name)
+	if (t.kind != parcl::v_name)
 		throw std::exception("variable name not defined\n");
 	std::string var_name = t.name;
-	token t2 = ts.get();
+	parcl::token t2 = ts.get();
 	if (t2.kind != '=')
 		throw std::exception("The '=' is missing\n");
-	double d = expression();
-	CVariables::define_name(var_name, d,isConst);
+	double d = expression(ts);
+	parcl::CVariables::define_name(var_name, d,isConst);
 	return d;
 }
 
 // expression or declaration of variable
-double statement() {
-	token t = ts.get();
+double statement(parcl::token_stream& ts) {
+	parcl::token t = ts.get();
 	switch (t.kind) {
-	case let:
-		return declaration();
+	case parcl::let:
+		return declaration(ts);
 	default:
 		ts.put_back(t);
-		return expression();
+		return expression(ts);
 	}
 }
 
 
 
 // Work in cycle with input data
-void calculate() {
+void calculate(parcl::token_stream& ts) {
 
 	while (std::cin) {
 		try {
 			std::cout << ">> ";
-			token t = ts.get();
-			while (t.kind == print) t = ts.get();		// eat all ';'
-			if (t.kind == quit) return;
+			parcl::token t = ts.get();
+			while (t.kind == parcl::print) t = ts.get();		// eat all ';'
+			if (t.kind == parcl::quit) return;
 			ts.put_back(t);
-			if (t.kind == help) {
-				help_info();
+			if (t.kind == parcl::help) {
+				parcl::help_info();
 				std::cout << ">> ";
 			}
-			std::cout << "= " << statement() << '\n';
+			std::cout << "= " << statement(ts) << '\n';
 		}
 		catch (std::exception& e) {
 			std::cerr << e.what() << '\n';
-			clean_up_mess();
+			clean_up_mess(ts);
 		}
 		catch (...) {
 			std::cerr << "Exeption\n";
-			clean_up_mess();
+			clean_up_mess(ts);
 		}
 	}
 }
@@ -151,10 +158,10 @@ void calculate() {
 
 int main() {
 	// constant variables
-	CVariables::define_name((std::string)"pi", 3.1415926535, CONST);
-	CVariables::define_name((std::string)"e", 2.7182818284, CONST);
-
-	calculate();
+	parcl::CVariables::define_name((std::string)"pi", 3.1415926535, CONST);
+	parcl::CVariables::define_name((std::string)"e", 2.7182818284, CONST);
+	parcl::token_stream ts;
+	calculate(ts);
 
 	system("pause");
 }
