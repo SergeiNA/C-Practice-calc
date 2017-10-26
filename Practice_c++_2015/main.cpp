@@ -34,6 +34,10 @@
 *	Реализовано отдельное пространство имен для данного парсера
 *	parcl
 ---------------------------------------------------------------
+*	01.10.2017
+*	Реализован конструктор у класса token_stream
+*	Запрещен конструктор копирования у класса token_stream 
+---------------------------------------------------------------
 *   Calculator with simle expression prase
 *	from Printsipy_I_Practica_S_ispolzovaniem_C_-_2015
 *	Chapter 6
@@ -136,11 +140,12 @@ void calculate(parcl::token_stream& ts) {
 			parcl::token t = ts.get();
 			while (t.kind == parcl::print) t = ts.get();		// eat all ';'
 			if (t.kind == parcl::quit) return;
-			ts.put_back(t);
 			if (t.kind == parcl::help) {
 				parcl::help_info();
 				std::cout << ">> ";
 			}
+			else
+				ts.put_back(t);
 			std::cout << "= " << statement(ts) << '\n';
 		}
 		catch (std::exception& e) {
@@ -161,6 +166,7 @@ int main() {
 	parcl::CVariables::define_name((std::string)"pi", 3.1415926535, CONST);
 	parcl::CVariables::define_name((std::string)"e", 2.7182818284, CONST);
 	parcl::token_stream ts;
+	//parcl::token_stream tk(ts);
 	calculate(ts);
 
 	system("pause");

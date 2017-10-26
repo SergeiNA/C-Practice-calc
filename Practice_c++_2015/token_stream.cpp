@@ -32,6 +32,11 @@ namespace parcl {
 
 	}
 
+	token_stream::token_stream():buffer{token()},full{false}
+	{
+	}
+
+
 	// Get a sumbol form cin stream and return token type of it
 	token token_stream::get() {
 		if (full) {

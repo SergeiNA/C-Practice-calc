@@ -8,12 +8,14 @@ namespace parcl {
 	class token_stream
 	{
 	public:
-		token get();
-		void put_back(token);
-		void ignore(char ch);
+		token	get			();
+		void	put_back	(token);
+		void	ignore		(char ch);
+		token_stream		(token_stream&) = delete;
+		token_stream		();
 	private:
-		bool full{ false };
-		token buffer;
+		bool	full;
+		token	buffer;
 	};
 
 }
