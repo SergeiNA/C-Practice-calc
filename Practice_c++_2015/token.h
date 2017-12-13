@@ -1,6 +1,6 @@
 #pragma once
 // Storage token info 
-// token can contain symbol (operator), value (namber) and variable (name and value)
+// token can contain symbol (operator), value (number) and variable (name and value)
 #include <string>
 namespace parcl {
 	// predefined constants 

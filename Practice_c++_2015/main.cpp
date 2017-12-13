@@ -75,7 +75,7 @@
 *		Литерал с плавающей точкой
 **/
 
-#define DEBUG 0
+#define DEBUG 1
 #define CONST true
 
 #include "Variables.h"
