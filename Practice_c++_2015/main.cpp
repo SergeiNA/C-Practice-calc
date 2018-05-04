@@ -39,6 +39,8 @@
 *	Реализован конструктор у класса token_stream
 *	Запрещен конструктор копирования у класса token_stream 
 ---------------------------------------------------------------
+*   04.05.2018 test comment change
+---------------------------------------------------------------
 *   Calculator with simle expression prase
 *	from Printsipy_I_Practica_S_ispolzovaniem_C_-_2015
 *	Chapter 6
